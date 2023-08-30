@@ -1,4 +1,4 @@
-package com.example.convenience_store;
+package com.example.conveniencestore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
