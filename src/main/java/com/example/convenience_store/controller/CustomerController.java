@@ -25,21 +25,22 @@ public class CustomerController {
 //    }
     @Autowired
     private CustomerService customerService;
+//    private Integer id;
 
     @GetMapping("")
     public String listAllCustomers(Model model) {
         List<Customer> Customers = customerService.getAllCustomers();
         model.addAttribute("customerinfo", Customers);
-        return "customers/mainpage";
+        return "customers/list";
     }
 
-    @GetMapping("/signup")
+    @GetMapping("/create")
     public String createCustomerForm(Model model) {
         model.addAttribute("customerinfo", new Customer());
-        return "customers/signup";
+        return "customers/create";
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/create")
     public String handleCreateCustomerForm(@ModelAttribute Customer CustomerRequest) {
         Customer Customer = customerService.create(CustomerRequest);
 
@@ -48,7 +49,7 @@ public class CustomerController {
         }
 
 
-        return "redirect:/mainpage";
+        return "redirect:/customers";
     }
 
     @GetMapping("/createFail")
@@ -66,7 +67,7 @@ public class CustomerController {
         if(Customer == null){
             return "customers/createFail";
         }
-        return "redirect:/mainpage";
+        return "redirect:/customers";
     }
 
 
@@ -83,13 +84,13 @@ public class CustomerController {
                 .build();
 
         model.addAttribute("customerinfo", CustomerRequest);
-        return "customers/signup";
+        return "customers/detail_list";
     }
     @GetMapping ("/delete/{id}")
     public String deleteCustomer(@PathVariable Integer id) {
         customerService.delete(id);
         System.out.println("삭제완료");
-        return "redirect:/mainpage";
+        return "redirect:/customers";
     }
 
 
