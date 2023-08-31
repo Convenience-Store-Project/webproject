@@ -10,6 +10,18 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("pageTitle", "로그인 페이지");
+        System.out.println(123);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+        System.out.println(12312);
+
         return "login"; // resources/templates/login.html과 매핑됩니다.
     }
 
