@@ -24,11 +24,11 @@ public class Reservation {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @JoinColumn(name = "product_id")
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @JoinColumn(name = "store_id")
     @ManyToOne
+    @JoinColumn(name = "store_id")
     private Store store;
 }
