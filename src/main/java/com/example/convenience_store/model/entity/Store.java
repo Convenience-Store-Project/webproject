@@ -5,19 +5,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customer_id;
-    private String id;
-    private String password;
+    private Integer store_id;
     private String name;
+
+    @OneToMany(mappedBy = "store")
+    private List<Product> products;
+
+    @OneToMany(mappedBy = "store")
+    private List<Reservation> reservations;
+
 }

@@ -5,19 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customer_id;
-    private String id;
-    private String password;
+    private Integer product_id;
     private String name;
+    private int quantity;
+    private int price;
+
+    @ManyToOne
+    private Store store;
 }
