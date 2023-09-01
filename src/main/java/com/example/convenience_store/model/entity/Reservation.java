@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,14 @@ public class Reservation {
     private Timestamp time;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @JoinColumn(name = "product_id")
     @ManyToOne
     private Product product;
 
+    @JoinColumn(name = "store_id")
     @ManyToOne
     private Store store;
 }
