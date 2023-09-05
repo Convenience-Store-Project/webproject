@@ -112,6 +112,8 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.quantity}"></td>
             <td th:text="${product.price}"></td>
+            <td><a th:href="@{/reservation/{id}(id=${product.product.id})}">주문</a></td>
+<!--            <td><button onclick="@{/reservation/{id}(id=${product.id})">주문</button></td>-->
         </tr>
         </tbody>
     </table>
