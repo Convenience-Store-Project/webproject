@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <head>
   <title>All customers</title>
 </head>
@@ -17,7 +18,8 @@
     <td th:text="${customer.customerId}"></td>
     <td th:text="${customer.name}"></td>
     <td>
-      <a th:href="@{/customers/detail_list/{id}(id=${customer.customerId})}">상세 목록보기</a>
+      <button type="button" onclick="location.href='@{/customers/reservation/reservation/{id}(id=${customer.customerId})}'">예약</button>
+      <a th:href="@{/customers/reservation/reservation/{id}(id=${customer.customerId})}">예약</a>
     </td>
   </tr>
   </tbody>
