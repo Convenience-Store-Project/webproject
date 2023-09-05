@@ -3,18 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-form {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    p.error-message {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-<h1>로그인</h1>
-<form action="#" method="post">
-  <label for="id">아이디:</label>
-  <input type="text" id="id" name="id" required><br>
+<div class="login-form">
+  <h1>로그인</h1>
+  <form action="#" method="post">
+    <label for="id">아이디:</label>
+    <input type="text" id="id" name="id" required>
 
-  <label for="password">비밀번호:</label>
-  <input type="password" id="password" name="password" required><br>
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password" required>
 
-  <button type="submit">로그인</button>
-</form>
-<p th:text="${error}"></p>
+    <button type="submit">로그인</button>
+  </form>
+  <p class="error-message" th:text="${error}"></p>
+</div>
 </body>
 </html>
