@@ -39,12 +39,15 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginProcess(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
+    public String loginProcess(@RequestParam String id,
+                               @RequestParam String password,
+                               HttpSession session,
+                               Model model) {
         Optional<Customer> customer = customerRepository.findByIdAndPassword(id,password);
 
         if (customer.isPresent()) {
             // 인증 성공 시
-            session.setAttribute("loggedInUser", customer.get());
+            session.setAttribute("customer", customer.get());
             return "redirect:/search"; // 로그인 성공 시 search로 이동
         } else {
             model.addAttribute("error", "로그인 실패!"); // 에러 메시지 전달
