@@ -14,5 +14,21 @@ public class ProductService {
     public List<Product> findProductByName(String name) {
         return productRepository.findByNameContaining(name);
     }
+    public Product read(Integer id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            return toProductResponse(product);
+        }
+        return null;
+    }
+
+    private Product toProductResponse(Product product) {
+        return Product.builder()
+                .productId(product.getProductId())
+                .name(product.getStore())
+                .email(product.getQuantity())
+                .phoneNumber(product.getPrice())
+                .build();
+    }
 
 }

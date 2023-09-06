@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "product")
 public class Product {
     @Id
-    private Integer product_id;
+    private Integer productId;
     private String name;
     private int quantity;
     private int price;
