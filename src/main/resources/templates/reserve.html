@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
     <meta charset="UTF-8">
+    <title>상품 예약</title>
 </head>
 <body>
-<h1>예약하기</h1>
-<table>
+<h2>상품 예약</h2>
 
+<!-- 예약에 관련된 상품 정보 표시 -->
+<table>
     <tbody>
     <tr th:each="product : ${productinfo}">
         <p>편의점: <span th:text="${product.store.name}"></span></p>
         <p>상품 이름: <span th:text="${product.name}"></span></p>
         <p>상품 수량: <span th:text="${product.quantity}"></span></p>
         <p>상품 가격: <span th:text="${product.price}"></span></p>
-
     </tr>
     </tbody>
-<!--         예약 수량 입력 폼 -->
-    <form action="/reservation/confirm" method="post">
-        <input type="hidden" name="productId" th:value="${product.productId}" />
+
+    <!-- 예약 수량 입력 폼 -->
+    <form action="/reserve/confirm" method="get">
+        <input type="hidden" name="storeName" th:if="${product != null}" th:value="${product.store.name}" />
         <label for="quantity">예약 수량:</label>
         <input type="number" id="quantity" name="quantity" min="1" max="${product.quantity}" required />
         <button type="submit">예약 확정</button>
     </form>
 </table>
-<button type="button" onclick="location.href='http://localhost:8080/confirm'">예약</button>
 </body>
 </html>

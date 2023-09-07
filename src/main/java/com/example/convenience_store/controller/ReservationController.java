@@ -17,9 +17,9 @@ public class ReservationController {
     private ReservationRepository reservationRepository;
     @Autowired
     private ProductService productService;
-    @GetMapping("/reservation")
+    @GetMapping("/reserve")
     public String reservationPage() {
-        return "reservation";
+        return "reserve";
     }
 
     @GetMapping("/confirm")
@@ -27,7 +27,7 @@ public class ReservationController {
 
         return "confirm";
     }
-    @GetMapping("/reservation/{id}")
+    @GetMapping("/reserve/{id}")
     public String reservationForm(@PathVariable Integer id, Model model) {
         Product productResponse = productService.read(id);
 
@@ -40,6 +40,6 @@ public class ReservationController {
 
 
         model.addAttribute("productinfo", productRequest);
-        return "reservation";
+        return "reserve";
     }
 }
