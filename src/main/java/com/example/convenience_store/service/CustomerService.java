@@ -13,8 +13,21 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    public boolean login(String id, String password, HttpSession session) {
+        Customer customer = customerRepository.findById(id).orElse(null);
+
+        if(customer != null && customer.getPassword().equals(password)) {
+            session.setAttribute("customer", customer);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void logout(HttpSession session) { session.invalidate();}
+
     @Cacheable(value = "customer", key = "#id")
-    public Customer getUserById(String id) {
+    public Customer getUserById(String id){
         return customerRepository.findById(id).orElse(null);
     }
 }

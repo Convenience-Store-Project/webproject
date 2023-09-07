@@ -23,14 +23,12 @@ public class ProductController {
     @Autowired
     private CustomerService customerService;
 
-    //0906 접근 차단
     @GetMapping("/search")
-    public String showSearchPage(HttpSession session, Model model) {
+    public String showSearchPage(HttpSession session, Model model0) {
         Customer customer = (Customer) session.getAttribute("customer");
-        if(customer == null) {
+        if(customer == null){
             return "redirect:/login";
         }
-
         return "search";
     }
 

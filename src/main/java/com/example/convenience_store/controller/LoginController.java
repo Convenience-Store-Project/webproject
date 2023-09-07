@@ -39,10 +39,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginProcess(@RequestParam String id,
-                               @RequestParam String password,
-                               HttpSession session,
-                               Model model) {
+    public String loginProcess(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
         Optional<Customer> customer = customerRepository.findByIdAndPassword(id,password);
 
         if (customer.isPresent()) {
