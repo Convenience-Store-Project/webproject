@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -14,10 +15,10 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public boolean login(String id, String password, HttpSession session) {
-        Customer customer = customerRepository.findById(id).orElse(null);
+        Optional<Customer> customer = customerRepository.findByIdAndPassword(id, password);
 
-        if(customer != null && customer.getPassword().equals(password)) {
-            session.setAttribute("customer", customer);
+        if(customer.isPresent()) {
+            session.setAttribute("customer", customer.get());
             return true;
         }
 

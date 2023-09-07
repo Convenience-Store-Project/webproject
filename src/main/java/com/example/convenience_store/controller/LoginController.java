@@ -2,6 +2,7 @@ package com.example.convenience_store.controller;
 
 import com.example.convenience_store.model.entity.Customer;
 import com.example.convenience_store.repository.CustomerRepository;
+import com.example.convenience_store.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class LoginController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping("/signup")
     public String signupPage() {
         return "signup";
@@ -25,6 +29,12 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage() {
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        customerService.logout(session);
+        return "redirect:/login";
     }
 
     @PostMapping("/signup")
@@ -40,11 +50,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginProcess(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
-        Optional<Customer> customer = customerRepository.findByIdAndPassword(id,password);
 
-        if (customer.isPresent()) {
-            // 인증 성공 시
-            session.setAttribute("customer", customer.get());
+        if (customerService.login(id, password, session)) {
             return "redirect:/search"; // 로그인 성공 시 search로 이동
         } else {
             model.addAttribute("error", "로그인 실패!"); // 에러 메시지 전달
