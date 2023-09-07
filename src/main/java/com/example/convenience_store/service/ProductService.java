@@ -24,10 +24,10 @@ public class ProductService {
 
     private Product toProductResponse(Product product) {
         return Product.builder()
-                .productId(product.getProductId())
-                .name(product.getStore())
-                .email(product.getQuantity())
-                .phoneNumber(product.getPrice())
+                .store(product.getStore())
+                .name(product.getName())
+                .quantity(product.getQuantity())
+                .price(product.getPrice())
                 .build();
     }
 

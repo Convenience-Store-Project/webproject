@@ -7,23 +7,23 @@
 <body>
 <h1>예약하기</h1>
 <table>
-    <thead>
-    <tr>
-        <th>편의점</th>
-        <th>수량</th>
-        <th>개수</th>
-        <th>가격</th>
-    </tr>
-    </thead>
+
     <tbody>
-    <tr th:each="product : ${foundProducts}">
-        <td th:text="${product.store.name}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.quantity}"></td>
-        <td th:text="${product.price}"></td>
-    </tr>
+    <tr th:each="product : ${productinfo}">
+        <p>편의점: <span th:text="${product.store.name}"></span></p>
+        <p>상품 이름: <span th:text="${product.name}"></span></p>
+        <p>상품 수량: <span th:text="${product.quantity}"></span></p>
+        <p>상품 가격: <span th:text="${product.price}"></span></p>
+
     </tr>
     </tbody>
+<!--         예약 수량 입력 폼 -->
+    <form action="/reservation/confirm" method="post">
+        <input type="hidden" name="productId" th:value="${product.productId}" />
+        <label for="quantity">예약 수량:</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="${product.quantity}" required />
+        <button type="submit">예약 확정</button>
+    </form>
 </table>
 <button type="button" onclick="location.href='http://localhost:8080/confirm'">예약</button>
 </body>

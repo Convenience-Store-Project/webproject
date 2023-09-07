@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ReservationController {
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
     private ProductService productService;
     @GetMapping("/reservation")
     public String reservationPage() {
@@ -31,10 +32,14 @@ public class ReservationController {
         Product productResponse = productService.read(id);
 
         Product productRequest = Product.builder()
-                        .product
+                .store(productResponse.getStore())
+                .name(productResponse.getName())
+                .quantity(productResponse.getQuantity())
+                .price(productResponse.getPrice())
+                .build();
 
-        model.addAttribute("studentinfo", studentRequest);
-        return "students/detail_list";
+
+        model.addAttribute("productinfo", productRequest);
         return "reservation";
     }
 }
