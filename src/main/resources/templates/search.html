@@ -135,6 +135,7 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.quantity}"></td>
             <td th:text="${product.price}"></td>
+<!--            하이퍼링크 처리-->
 <!--            <td><a th:href="@{/reserve/{id}(id=${product.productId})}" th:if="${product.quantity > 0}">주문</a></td>-->
             <!--            <td><button type="button" class="reserve-button" th:unless="${product.quantity > 0}" disabled>매진</button></td>-->
             <td>

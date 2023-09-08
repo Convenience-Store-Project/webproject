@@ -22,6 +22,17 @@ public class ProductService {
         return null;
     }
 
+    public Product update(Product updatedProduct) {
+        Product existingProduct = productRepository.findById(updatedProduct.getProductId()).orElse(null);
+        System.out.println("1111111111");
+        if (existingProduct != null) {
+            existingProduct.setQuantity(updatedProduct.getQuantity());
+            Product updated = productRepository.save(existingProduct);
+            return toProductResponse(updated);
+        }
+        return null;
+    }
+
     private Product toProductResponse(Product product) {
         return Product.builder()
                 .store(product.getStore())
