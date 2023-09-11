@@ -161,7 +161,6 @@
             <!--            <td><button type="button" class="reserve-button" th:unless="${product.quantity > 0}" disabled>매진</button></td>-->
             <td>
                 <form th:action="@{/reserve/{id}(id=${product.productId})}" method="get" th:if="${product.quantity > 0}">
-                    <input type="hidden" name="storeName" th:value="${product.store.name}" />
                     <input type="hidden" name="productName" th:value="${product.name}" />
                     <input type="hidden" name="productPrice" th:value="${product.price}" />
                     <button class="button" type="submit">주문</button>
