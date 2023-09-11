@@ -24,9 +24,12 @@ public class ProductService {
 
     public Product update(Product updatedProduct) {
         Product existingProduct = productRepository.findById(updatedProduct.getProductId()).orElse(null);
-        System.out.println("1111111111");
         if (existingProduct != null) {
-            existingProduct.setQuantity(updatedProduct.getQuantity());
+            if (existingProduct.getQuantity() - updatedProduct.getQuantity() < 0) {
+                System.out.println("수량이 없습니다");
+            } else {
+                existingProduct.setQuantity(existingProduct.getQuantity() - updatedProduct.getQuantity());
+            }
             Product updated = productRepository.save(existingProduct);
             return toProductResponse(updated);
         }
