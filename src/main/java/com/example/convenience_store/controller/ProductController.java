@@ -2,21 +2,29 @@ package com.example.convenience_store.controller;
 
 import com.example.convenience_store.model.entity.Customer;
 import com.example.convenience_store.model.entity.Product;
+import com.example.convenience_store.model.entity.Reservation;
 import com.example.convenience_store.repository.ProductRepository;
 import com.example.convenience_store.service.CustomerService;
 import com.example.convenience_store.service.ProductService;
+import com.example.convenience_store.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ReservationService reservationService;
+
 
     @GetMapping("/search")
     public String showSearchPage(HttpSession session, Model model0) {
@@ -57,39 +65,50 @@ public class ProductController {
                 .price(productResponse.getPrice())
                 .build();
 
-
+        session.setAttribute("product", productRequest);
         model.addAttribute("productinfo", productRequest);
         return "reserve";
     }
 
     @PostMapping("/update")
     public String ProductUpdateForm(@ModelAttribute Product productRequest, HttpSession session) {
+
         Integer id = (Integer) session.getAttribute("productId");
         productRequest.setProductId(id);
         Product product = productService.update(productRequest);
 
-        if(product == null){
+        if (product == null) {
             return "fail";
         }
-        return "confirm";
+
+//        Product confirmProduct = (Product) session.getAttribute("product");
+        Customer confirmCustomer = (Customer) session.getAttribute("customer");
+
+        // Reservation 엔티티를 빌더를 사용하여 생성
+        Reservation reservation = Reservation.builder()
+                .customer(confirmCustomer)
+                .product(product)
+                .store(product.getStore())
+                .quantity(product.getQuantity())
+                .price(product.getPrice())
+                .time(Timestamp.from(Instant.now())) // 현재 시간을 Timestamp로 변환하여 설정
+                .build();
+
+        // 생성된 Reservation 엔티티를 데이터베이스에 저장
+        reservationService.create(reservation);
+
+        // 다른 페이지로 리다이렉트 또는 결과를 반환할 수 있음
+        return "redirect:/search"; // 검색 페이지로 리다이렉트
+
     }
-
-//    @GetMapping("/ProductId")
-//    public String storeIdInSession(HttpSession session, Model model) {
-//        String userId = "your_user_id"; // 저장할 사용자 ID
-//        session.setAttribute("userId", userId);
-//        return "redirect:/somePage"; // ID를 저장하고 다른 페이지로 리다이렉트
-//    }
-//
-//    @GetMapping("/somePage")
-//    public String showPageWithStoredId(HttpSession session, Model model) {
-//        String userId = (String) session.getAttribute("userId");
-//        if (userId != null) {
-//            model.addAttribute("userId", userId);
-//        }
-//        return "somePage"; // 저장된 ID를 화면에 표시하는 페이지로 이동
-//    }
-
-
-
 }
+
+
+
+
+
+
+
+
+
+

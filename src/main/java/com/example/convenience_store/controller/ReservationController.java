@@ -1,45 +1,36 @@
 //package com.example.convenience_store.controller;
-//
+//import com.example.convenience_store.model.entity.Customer;
 //import com.example.convenience_store.model.entity.Product;
-//import com.example.convenience_store.repository.ReservationRepository;
-//import com.example.convenience_store.service.ProductService;
+//import com.example.convenience_store.model.entity.Reservation;
+//import com.example.convenience_store.service.ReservationService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
-//
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//
+//import javax.servlet.http.HttpSession;
 //
 //
 //@Controller
 //public class ReservationController {
 //    @Autowired
-//    private ReservationRepository reservationRepository;
-//    @Autowired
-//    private ProductService productService;
-//    @GetMapping("/reserve")
-//    public String reservationPage() {
-//        return "reserve";
-//    }
+//    private ReservationService reservationService;
 //
-//    @GetMapping("/confirm")
-//    public String confirmPage() {
+//    @PostMapping("/confirm")
+//    public String ReservationProductForm(@ModelAttribute Reservation reservationRequest, HttpSession session) {
+//
+//        Integer id = (Integer) session.getAttribute("productId");
+//        Customer customer = (Customer) session.getAttribute("customer");
+//        System.out.println(customer.getCustomer_id());
+//
+//        Reservation reservation = reservationService.create(reservationRequest);
+//        if(reservation == null){
+//            System.out.println("안됩니당");
+//        }
 //
 //        return "confirm";
-//    }
-//    @GetMapping("/reserve/{id}")
-//    public String reservationForm(@PathVariable Integer id, Model model) {
-//        Product productResponse = productService.read(id);
-//
-//        Product productRequest = Product.builder()
-//                .store(productResponse.getStore())
-//                .name(productResponse.getName())
-//                .quantity(productResponse.getQuantity())
-//                .price(productResponse.getPrice())
-//                .build();
-//
-//
-//        model.addAttribute("productinfo", productRequest);
-//        return "reserve";
 //    }
 //}

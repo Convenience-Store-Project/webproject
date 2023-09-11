@@ -18,8 +18,8 @@ public class Product {
     @Column(name = "product_id")
     private Integer productId;
     private String name;
-    private int quantity;
-    private int price;
+    private Integer quantity;
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name = "store_id")

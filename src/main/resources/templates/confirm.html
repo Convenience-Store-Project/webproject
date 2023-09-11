@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <title></title>
   <meta charset="UTF-8">
+  <title>예약완료</title>
 </head>
 <body>
 <h1>예약완료</h1>
-<table>
-  <thead>
-  <tr>
-    <th>편의점</th>
-    <th>상품</th>
-    <th>수량</th>
-    <th>가격</th>
-  </tr>
-  </thead>
-  <tbody>
 
-  </td>
-  </tr>
-  </tbody>
-</table>
-<button type="submit">추가주문</button>
-<button type="submit">주문취소</button>
+
+<!-- 예약에 관련된 상품 정보 표시 -->
+<form action="/search" method="post">
+  <button type="submit">추가주문</button>
+  <table>
+    <tbody>
+
+<!--    <tr th:each="product : ${productinfo}">-->
+<!--      <td>편의점: <span th:text="${product.store.name}"></span></td>-->
+<!--      <td>상품 이름: <span th:text="${product.name}"></span></td>-->
+<!--      <td>상품 수량: <span th:text="${product.quantity}"></span></td>-->
+<!--      <td>상품 가격: <span th:text="${product.price}"></span></td>-->
+<!--      <td></td>-->
+<!--    </tr>-->
+    </tbody>
+  </table>
+</form>
+
+<form action="/cancel" method="post">
+  <button type="submit">주문취소</button>
+</form>
 </body>
 </html>
