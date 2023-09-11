@@ -8,10 +8,7 @@ import com.example.convenience_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,7 +19,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/search")
-    public String showSearchPage(HttpSession session, Model model0) {
+    public String showSearchPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
         if(customer == null){
             return "redirect:/login";
@@ -49,8 +46,9 @@ public class ProductController {
     }
 
     @GetMapping("/reserve/{id}")
-    public String reserveForm(@PathVariable Integer id, Model model) {
+    public String reserveForm(@PathVariable Integer id, Model model, HttpSession session) {
         Product productResponse = productService.read(id);
+        session.setAttribute("productId", id);
 
         Product productRequest = Product.builder()
                 .store(productResponse.getStore())
@@ -63,6 +61,34 @@ public class ProductController {
         model.addAttribute("productinfo", productRequest);
         return "reserve";
     }
+
+    @PostMapping("/update")
+    public String ProductUpdateForm(@ModelAttribute Product productRequest, HttpSession session) {
+        Integer id = (Integer) session.getAttribute("productId");
+        productRequest.setProductId(id);
+        Product product = productService.update(productRequest);
+
+        if(product == null){
+            return "fail";
+        }
+        return "confirm";
+    }
+
+//    @GetMapping("/ProductId")
+//    public String storeIdInSession(HttpSession session, Model model) {
+//        String userId = "your_user_id"; // 저장할 사용자 ID
+//        session.setAttribute("userId", userId);
+//        return "redirect:/somePage"; // ID를 저장하고 다른 페이지로 리다이렉트
+//    }
+//
+//    @GetMapping("/somePage")
+//    public String showPageWithStoredId(HttpSession session, Model model) {
+//        String userId = (String) session.getAttribute("userId");
+//        if (userId != null) {
+//            model.addAttribute("userId", userId);
+//        }
+//        return "somePage"; // 저장된 ID를 화면에 표시하는 페이지로 이동
+//    }
 
 
 

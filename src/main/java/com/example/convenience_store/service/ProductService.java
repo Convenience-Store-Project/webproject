@@ -11,6 +11,7 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
     public List<Product> findProductByName(String name) {
         return productRepository.findByNameContaining(name);
     }
@@ -18,6 +19,20 @@ public class ProductService {
         Product product = productRepository.findById(id).orElse(null);
         if (product != null) {
             return toProductResponse(product);
+        }
+        return null;
+    }
+
+    public Product update(Product updatedProduct) {
+        Product existingProduct = productRepository.findById(updatedProduct.getProductId()).orElse(null);
+        if (existingProduct != null) {
+            if (existingProduct.getQuantity() - updatedProduct.getQuantity() < 0) {
+                System.out.println("수량이 없습니다");
+            } else {
+                existingProduct.setQuantity(existingProduct.getQuantity() - updatedProduct.getQuantity());
+            }
+            Product updated = productRepository.save(existingProduct);
+            return toProductResponse(updated);
         }
         return null;
     }
