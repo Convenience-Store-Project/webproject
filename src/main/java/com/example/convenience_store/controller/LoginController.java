@@ -17,7 +17,6 @@ import java.util.Optional;
 public class LoginController {
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private CustomerService customerService;
 
@@ -37,6 +36,7 @@ public class LoginController {
         return "redirect:/login";
     }
 
+
     @PostMapping("/signup")
     public String signupProcess(@RequestParam String name, @RequestParam String id, @RequestParam String password) {
         Customer customer = new Customer();
@@ -50,13 +50,15 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginProcess(@RequestParam String id, @RequestParam String password, HttpSession session, Model model) {
+        Optional<Customer> customer = customerRepository.findByIdAndPassword(id,password);
 
-        if (customerService.login(id, password, session)) {
+        if (customer.isPresent()) {
+            // 인증 성공 시
+            session.setAttribute("customer", customer.get());
             return "redirect:/search"; // 로그인 성공 시 search로 이동
         } else {
             model.addAttribute("error", "로그인 실패!"); // 에러 메시지 전달
             return "login"; // 로그인 실패 시 다시 로그인 페이지로 이동
         }
     }
-
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-
     public List<Product> findProductByName(String name) {
         return productRepository.findByNameContaining(name);
     }
@@ -39,6 +38,7 @@ public class ProductService {
 
     private Product toProductResponse(Product product) {
         return Product.builder()
+                .productId(product.getProductId())  //product_id 추가
                 .store(product.getStore())
                 .name(product.getName())
                 .quantity(product.getQuantity())
