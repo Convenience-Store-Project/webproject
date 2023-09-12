@@ -1,6 +1,7 @@
 package com.example.convenience_store.service;
 
 import com.example.convenience_store.model.entity.Customer;
+import com.example.convenience_store.model.entity.Product;
 import com.example.convenience_store.model.entity.Reservation;
 import com.example.convenience_store.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ProductService productService;
 
     public Reservation save(Reservation reservation) {
         // 가격을 계산하여 설정
@@ -30,6 +33,10 @@ public class ReservationService {
     }
 
     public Optional<Reservation> getReservationById(Integer id) {
+        return reservationRepository.findById(id);
+    }
+
+    public Optional<Reservation> getReservationWithProduct(Integer id) {
         return reservationRepository.findById(id);
     }
 
